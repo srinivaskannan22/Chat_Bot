@@ -1,0 +1,66 @@
+body {
+    background-color: rgb(163, 163, 227);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+form {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+    border-radius: 10px;
+    border: 2px solid black;
+    min-width: 300px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+form > h1 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.radio-group {
+    display: flex;
+    justify-content: space-around;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+#prompt {
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: none;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+#answer{
+    position: relative;
+    top:10px;
+    background-color: white;
+    min-width:300px;
+    max-width: 500px;
+    min-height:50px;
+    border-radius: 10px;
+    margin: 5px;
+}

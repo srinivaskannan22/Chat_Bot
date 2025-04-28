@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Selector</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class ='full_width '>
+        <form action="/submit" method="post" id="data_">
+            <h1>Select a Model</h1>
+
+            <div class="radio-group">
+                <input type="radio" name="model" id="gemini" value="gemini">
+                <label for="gemini">Gemini</label>
+
+                <input type="radio" name="model" id="llama" value="llama">
+                <label for="llama">Llama</label>
+            </div>
+
+            <div class="input-group">
+                <label for="prompt">Enter Prompt:</label>
+                <input type="text" name="prompt" id="prompt" placeholder="Type your prompt...">
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+        <div id="answer"></div>
+    </div>    
+</body>
+<script src="index.js"></script>
+</html>
