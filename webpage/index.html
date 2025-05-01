@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompting</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <form id ='aiagent'>
+        <h1>AIAgent</h1>
+        <div class="model-checking">
+            <div>
+                <input type='radio' name="model" id="Gemini" value="gemini">
+                <label for="model">Gemini</label>
+                <input type="radio" name="model" id="llama" value="llama">
+                <label for="model">LLama</label>
+            </div>
+            <div class="storing"></div>
+        </div>
+        <div class="prompting2">
+            <div class="prompting">
+                <input type="text" name="text" id="text" placeholder="prompting here">
+                <input type="button" value="prompting">
+            </div>
+      </div>
+    </form> 
+    <script src="index.js"></script>   
+</body>
+</html>
