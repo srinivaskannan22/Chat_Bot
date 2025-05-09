@@ -1,0 +1,90 @@
+body{
+    background-color: rgba(69,84,169,0.66);
+    /* width: 819px;
+    height: 646; */
+}
+.main-container{
+    display: flex;
+    justify-content: center;
+}
+.conatiner1{
+    width: 376px;
+    height: 538px;
+    background-color: rgba(239,239,239,0.86);
+    border-radius: 20px;
+    
+}
+.container2{
+    width: 376px;
+    height: 538px;
+    background-color: rgba(214,225,234,0.76);
+    border-radius: 20px;
+    margin-left:30px;
+    display: block;
+    position: relative;
+}
+.heading{
+    color: white;
+    text-align: center;
+    -webkit-text-stroke: 0.5px black;
+}
+.gemini_logo{
+    width: 100%;
+    height: 47px;
+    background-color: rgba(49,118,38,.10);
+    margin-top: 30px;
+    border-radius: 10px;
+    display: flex;
+    cursor: pointer;
+}
+.gemini_logo img{
+    width: 31px;
+    height: 30px;
+    margin-right: 15px;
+    align-self: center;
+    margin-left: 10px;
+}
+.gemini_logo h3{
+    -webkit-text-stroke: 0.4px white;
+
+}
+.title_icon{
+    width: 376px;
+    height: 58px;
+    border-radius: 20px;
+    background-color: rgb(217,217,217);
+    display: flex;
+}
+.title_icon img{
+    width: 31px;
+    height: 30px;
+    margin-top: 12px;
+    margin-right: 10px;
+    margin-left: 10px;
+   
+}
+.title_icon h2{
+    -webkit-text-stroke: 0.4px white;
+}
+.search{
+    width: 100%;
+    bottom: 0px;
+    height: 50px;
+    position: absolute;
+    bottom: 5px ;
+    left: 10px;
+}
+.search input[type='text']{
+    width: 70%;
+    height: 30px;
+    border-radius: 10px;
+    margin-left: 10px;
+    border-color: white;
+
+}
+.search input[type='button']{
+    height: 30px;
+    border-radius: 10px;
+    background-color: rgb(22, 58, 16);
+    color: white;
+}

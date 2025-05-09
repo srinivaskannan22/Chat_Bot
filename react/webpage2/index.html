@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <h1 CLASS ='heading'>AI CHAT-BOT</h1>
+    <div class="main-container">
+        <div class="conatiner1" >
+            <div class="gemini_logo" onclick="changing_color(event)">
+                <img src="images/google-gemini-icon%20(1).png" alt="gemini_logo_icon">
+                <h3>Gemini Chat-Bot</h3>
+            </div>
+            <div class="gemini_logo"  onclick="changing_color(event)">
+                <img src="images/llama.png" alt="llama icon" >
+                <h3>llama Chat-Bot</h3>
+            </div>
+        </div>
+        <div class="container2">
+            <div class="title_icon">
+                <img src="images/google-gemini-icon%20(1).png" alt="gemini_logo_icon" srcset="">
+                <h2>Gemini-chatbot</h2>
+            </div>
+            <div class =''></div>
+            <div class="search">
+                <form action="" method="post">
+                    <input type="text" name="" id="" placeholder="prompting here">
+                    <!-- <input type="file"> -->
+                    <input type="button" value="sumbit">
+
+                </form>
+            </div>
+       
+        </div>
+    </div>
+    <script>
+   function changing_color(event) {
+    event.target.style.backgroundColor='red'
+    setTimeout(() => {
+    event.target.style.backgroundColor = 'rgba(49,118,38,.10)';
+    }, 300);
+}
+    </script>
+    
+    
+    
+</body>
+</html>
