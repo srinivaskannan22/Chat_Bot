@@ -12,7 +12,6 @@ engine=create_engine(os.getenv('DATABASE_CONNECTION_URI'))
 
 sessionlocal=sessionmaker(bind=engine,class_=Session)
 
-Base.metadata.create_all(engine)
 
 def get_db():
     db=sessionlocal()

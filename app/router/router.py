@@ -1,35 +1,55 @@
-from fastapi import APIRouter,Depends,HTTPException
+from fastapi import APIRouter,Depends,HTTPException,Response
 from sqlalchemy import create_engine,or_,and_
 from model.schema import User,Login
 from database.database2 import get_db,engine
 from model.model import UserModel,Base
 from sqlalchemy.orm import Session
-from response import Response
-
-
+from response import Response_
+from service import auth
+from fastapi.security import OAuth2PasswordRequestForm,OAuth2PasswordBearer
+from passlib.context import CryptContext
 
 Base.metadata.create_all(engine)
 
-router=APIRouter(tags=['Userprofile'])
+pwdcontext=CryptContext(schemes=['bcrypt'],deprecated='auto')
+
+router=APIRouter(tags=['User_Profile'])
+
+SESSION_COOKIE_NAME = "session_token"
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login_authentication")
+
+def checking_password(a,b):
+    return pwdcontext.verify(a,b)
 
 @router.post('/user_create')
 def createuser(user:User,db:Session=Depends(get_db)):
+    hashpassword=pwdcontext.hash(user.user_password)
+    user.user_password=hashpassword
     user_=db.query(UserModel).filter(or_(UserModel.user_email == user.user_email,UserModel.user_phone == user.user_phone)).first()
     if user_ :
         raise HTTPException(status_code=409,detail='user already exist')
     us=UserModel(**user.dict())
     db.add(us)
     db.commit()
-    return Response.upload_message('user create successfully')
+    return Response_.upload_message('user create successfully')
 
 
 @router.post('/login_authentication')
-def login(login:Login,db: Session=Depends(get_db)):
-    user_=db.query(UserModel).filter(and_(UserModel.user_email==login.user_email,UserModel.user_password==login.user_password))
-    if user_:
-        return Response.success_message('login successfull')
-    else:
-        raise HTTPException(status_code=401,detail='incorrect password')
+def login(response:Response,login:OAuth2PasswordRequestForm=Depends(),db: Session=Depends(get_db)):
+    user_=db.query(UserModel).filter(UserModel.user_email==login.username).first()
+    if not user_:
+        raise HTTPException(status_code=404,detail='user not found')
+    if not checking_password(login.password,user_.user_password):
+        raise HTTPException(status_code=401,detail='Password incorrect')
+    jwt_encode=auth.create_token(({"user.email_id":login.username}))
+    response.set_cookie(key=SESSION_COOKIE_NAME,value=jwt_encode,httponly=True,secure=True,expires=1800)
+    return Response_.success_message('login successfull')    
+    
+@router.post("/logout")
+async def logout(response:Response):
+    response.delete_cookie(SESSION_COOKIE_NAME)
+    return Response_.success_message('logout successsfully')
 
     
 

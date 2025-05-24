@@ -1,6 +1,6 @@
 
 
-class Response:
+class Response_:
     
     def success_message(response):
         return {

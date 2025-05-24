@@ -9,3 +9,9 @@ class User(BaseModel):
 class Login(BaseModel):
     user_email:str
     user_password:str   
+
+
+class ItemSelection(BaseModel):
+    model: str 
+    item: str
+       
