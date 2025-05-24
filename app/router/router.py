@@ -42,13 +42,14 @@ def login(response:Response,login:OAuth2PasswordRequestForm=Depends(),db: Sessio
         raise HTTPException(status_code=404,detail='user not found')
     if not checking_password(login.password,user_.user_password):
         raise HTTPException(status_code=401,detail='Password incorrect')
-    jwt_encode=auth.create_token(({"user.email_id":login.username}))
+    jwt_encode=auth.create_token(({"user_id":user_.user_id,"user.email_id":login.username,"user_password":login.password}))
     response.set_cookie(key=SESSION_COOKIE_NAME,value=jwt_encode,httponly=True,secure=True,expires=1800)
+    response.headers['Autherisation']=(jwt_encode)
     return Response_.success_message('login successfull')    
     
 @router.post("/logout")
 async def logout(response:Response):
-    response.delete_cookie(SESSION_COOKIE_NAME)
+    response.delete_cookie(key=SESSION_COOKIE_NAME)
     return Response_.success_message('logout successsfully')
 
     

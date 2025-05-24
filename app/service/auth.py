@@ -17,14 +17,14 @@ def create_token(data:dict):
     return encode
 
 
-def verify_token(token:str,credential_exception):
+def verify_token(token,credential_exception):
     try:
         decode=jwt.decode(token,secret_key,algorithms=["HS256"])
         email_id:str=decode.get('user.email_id')
         if email_id is None:
             raise credential_exception
-        token_data=UserModel(email_id=email_id)
-        return token_data
+        # token_data=UserModel(user_email=email_id)
+        return decode
     except JWTError:
         return credential_exception    
 
