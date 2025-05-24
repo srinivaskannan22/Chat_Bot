@@ -12,7 +12,9 @@ os.environ['GOOGLE_APPLICATION_CREDENTIALS']='/Users/bootlabs/genai_practice/cop
 client = Groq()
 
 class model_:
+    
     def groq_(content):
+        
         completion = client.chat.completions.create(
             model="llama-3.1-8b-instant",
             messages=[{"role": "user", "content": str(content)}],

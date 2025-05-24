@@ -1,10 +1,13 @@
 import os
-from app.storage.storage import gcp_st
-from app.storage.model import model_
+from storage.storage import gcp_st
+from service.chat_service import model_
 from dotenv import load_dotenv
 from fastapi import FastAPI,File,UploadFile
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+from database.database import db
+from service.encrypt_service import Encrpt
+from router import router
 
 load_dotenv()
 os.environ['GOOGLE_APPLICATION_CREDENTIALS']=os.getenv('Google_credential')
@@ -23,6 +26,7 @@ app.add_middleware(
 )
 
 
+app.include_router(router.router)
 @app.post('/chatbot')
 def chatbot(destination_file:str,source_file:UploadFile=File(...)):
     try:
@@ -44,10 +48,19 @@ async def select_item(payload: ItemSelection):
             app.append(answer.choices[0].delta.content )
 
         app_filtered = [str(item) for item in app if item is not None]
-        print(app_filtered)
-        return "".join(app_filtered)
+        answer="".join(app_filtered)
+        answer_json={"prompt":item,"answer":answer}
+        encrypt=Encrpt.encrypt_(answer_json)
+        db['llama'].insert_one(encrypt)
+        return answer
     elif model.strip()=='gemini':
         answer=model_.goo_gemini(item)
+        answer_json={"prompt":item,"answer":answer}
+        encrypt=Encrpt.encrypt_(answer_json)
+        db['gemini'].insert_one(encrypt)
         return answer
+    else:
+        print(model)
+        return {"response": f"Unsupported model: {model}"}
     
         
