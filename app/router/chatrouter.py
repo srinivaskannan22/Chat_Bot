@@ -31,9 +31,10 @@ async def chatbot(request:Request,payload: ItemSelection):
     model = payload.model
     try:
         user=get_current_user(request)
-        user_id=user['user_id']    
+        user_id=user['user_id']
+        models_=model_()    
         if str(model.strip())=='llama':
-            answers=model_.groq_(item)
+            answers=models_.groq_(item,request)
             app=[]
             for answer in answers:
                 app.append(answer.choices[0].delta.content )
@@ -45,7 +46,7 @@ async def chatbot(request:Request,payload: ItemSelection):
             db['llama'].insert_one(encrypt)
             return answer
         elif model.strip()=='gemini':
-            answer=model_.goo_gemini(item)
+            answer=models_.goo_gemini(item,request)
             answer_json={"user_id":user_id,"prompt":item,"answer":answer}
             encrypt=Encrpt.encrypt_(answer_json)
             db['gemini'].insert_one(encrypt)
