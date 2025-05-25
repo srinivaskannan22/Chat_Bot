@@ -1,0 +1,9 @@
+.container{
+    z-index: 1;
+    /* border: 2px solid black; */
+    position: relative;
+    top:100px;
+    width: 1000px;
+    height: 500px;
+
+}

@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Literal
 
 class User(BaseModel):
     user_name:str
@@ -14,4 +15,4 @@ class Login(BaseModel):
 class ItemSelection(BaseModel):
     model: str 
     item: str
-       
+  

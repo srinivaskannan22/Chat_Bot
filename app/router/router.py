@@ -1,4 +1,4 @@
-from fastapi import APIRouter,Depends,HTTPException,Response
+from fastapi import APIRouter,Depends,HTTPException,Response,Request
 from sqlalchemy import create_engine,or_,and_
 from model.schema import User,Login
 from database.database2 import get_db,engine
@@ -8,6 +8,8 @@ from response import Response_
 from service import auth
 from fastapi.security import OAuth2PasswordRequestForm,OAuth2PasswordBearer
 from passlib.context import CryptContext
+from fastapi.responses import RedirectResponse
+from service.auth import get_current_user
 
 Base.metadata.create_all(engine)
 
@@ -42,15 +44,34 @@ def login(response:Response,login:OAuth2PasswordRequestForm=Depends(),db: Sessio
         raise HTTPException(status_code=404,detail='user not found')
     if not checking_password(login.password,user_.user_password):
         raise HTTPException(status_code=401,detail='Password incorrect')
-    jwt_encode=auth.create_token(({"user_id":user_.user_id,"user.email_id":login.username,"user_password":login.password}))
+    jwt_encode=auth.create_token(({"user_id":user_.user_id,"user.email_id":login.username}))
     response.set_cookie(key=SESSION_COOKIE_NAME,value=jwt_encode,httponly=True,secure=True,expires=1800)
     response.headers['Autherisation']=(jwt_encode)
     return Response_.success_message('login successfull')    
     
-@router.post("/logout")
+@router.get("/logout")
 async def logout(response:Response):
     response.delete_cookie(key=SESSION_COOKIE_NAME)
     return Response_.success_message('logout successsfully')
+
+@router.put('/updatepassword')
+async def updata_password(password:str,response: Request,db: Session=Depends(get_db)):
+    try:
+        user=get_current_user(response)
+        if user:
+            data=db.query(UserModel).filter(UserModel.user_email==user["user.email_id"]).first()
+            hashpassword=pwdcontext.hash(password)
+            data.user_password=hashpassword
+            db.commit()
+            return RedirectResponse(url="/logout",status_code=303)
+        else:
+            pass
+
+    except Exception as err:
+        print(err)    
+    
+
+
 
     
 
